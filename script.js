@@ -16,7 +16,7 @@ let bugTop = maxTop + (container.clientHeight - bugRect.height) / 2;
 let bugLeft = maxLeft + (container.clientWidth - bugRect.width) / 2;
 
 // Movement step size
-const stepSize = 20; // Adjust this value to increase or decrease speed
+const stepSize = 50; // Adjust this value to increase or decrease speed
 
 // Function to update bug's position
 function updateBugPosition() {
