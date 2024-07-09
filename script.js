@@ -1,28 +1,34 @@
 const bug = document.getElementById('bug');
 const container = document.querySelector('.container');
 
-// Get dimensions of the bug and container
-const bugRect = bug.getBoundingClientRect();
-const containerRect = container.getBoundingClientRect();
+// Function to update dimensions dynamically
+function updateDimensions() {
+    // Get dimensions of the bug and container
+    const bugRect = bug.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
 
-// Calculate maximum positions within the container
-const maxTop = containerRect.top;
-const maxBottom = containerRect.bottom - bugRect.height;
-const maxLeft = containerRect.left;
-const maxRight = containerRect.right - bugRect.width;
+    // Calculate maximum positions within the container
+    maxTop = containerRect.top;
+    maxBottom = containerRect.bottom - bugRect.height;
+    maxLeft = containerRect.left;
+    maxRight = containerRect.right - bugRect.width;
 
-// Initial positions of the bug
-let bugTop = maxTop + (container.clientHeight - bugRect.height) / 2;
-let bugLeft = maxLeft + (container.clientWidth - bugRect.width) / 2;
+    // Initial positions of the bug
+    bugTop = maxTop + (container.clientHeight - bugRect.height) / 2;
+    bugLeft = maxLeft + (container.clientWidth - bugRect.width) / 2;
 
-// Movement step size
-const stepSize = 50; // Adjust this value to increase or decrease speed
+    // Initialize bug position
+    updateBugPosition();
+}
 
 // Function to update bug's position
 function updateBugPosition() {
     bug.style.top = `${bugTop}px`;
     bug.style.left = `${bugLeft}px`;
 }
+
+// Movement step size
+let stepSize = 50; // Adjust this value to increase or decrease speed
 
 // Event listener for 'Up' button
 document.getElementById('up').addEventListener('click', () => {
@@ -52,5 +58,17 @@ document.getElementById('right').addEventListener('click', () => {
     updateBugPosition();
 });
 
-// Initialize bug position
-updateBugPosition();
+// Update step size based on viewport width
+function updateStepSize() {
+    stepSize = Math.min(window.innerWidth, window.innerHeight) / 10; // Adjust this ratio as needed
+}
+
+// Update dimensions and step size on window resize
+window.addEventListener('resize', () => {
+    updateDimensions();
+    updateStepSize();
+});
+
+// Initialize dimensions and step size
+updateDimensions();
+updateStepSize();
